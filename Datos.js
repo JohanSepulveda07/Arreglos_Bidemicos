@@ -45,7 +45,7 @@ document.getElementById("formulario-busqueda").addEventListener("submit", functi
 
 function buscarEstudiante(id) {
     let tablaResultados = document.getElementById("tabla-resultados").querySelector("tbody");
-    tablaResultados.innerHTML = ""; 
+    tablaResultados.innerHTML = "";          
 
     let i = 0;
     while (i < datos.length) {
