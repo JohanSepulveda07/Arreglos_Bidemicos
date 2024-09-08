@@ -45,22 +45,38 @@ document.getElementById("formulario-busqueda").addEventListener("submit", functi
 
 function buscarEstudiante(id) {
     let tablaResultados = document.getElementById("tabla-resultados").querySelector("tbody");
-    tablaResultados.innerHTML = "";          
+    tablaResultados.innerHTML = ""; 
 
     let i = 0;
-    while (i < datos.length) {
-        if (datos[i][0] === id) {
+    let encontrado = false;
+
+    if (datos.length == 0) {
+        Swal.fire({
+            icon: 'error',
+            title: 'No hay datos',
+            text: 'La lista esta vacia.',
+            confirmButtonText: 'Aceptar'
+        });
+        return;
+    }
+
+    do{
+        if (datos[i][0] == id) {
             let fila = datos[i];
             let promedio = (parseFloat(fila[4]) + parseFloat(fila[5]) + parseFloat(fila[6]) + parseFloat(fila[7])) / 4;
             tablaResultados.innerHTML = `<tr>${fila.map(campo => `<td>${campo}</td>`).join('')}<td>${promedio.toFixed(2)}</td></tr>`;
-            return;
-        }
-        i++;
+            encontrado = true;
+            break;
     }
-    Swal.fire({
-        icon: 'error',
-        title: 'Estudiante no encontrado',
-        text: `No se encontró ningún estudiante con el ID: ${id}`,
-        confirmButtonText: 'Aceptar'
-    });
+    i++
+    } while (i< datos.length);
+    
+    if (!encontrado) {
+        swal.fire({
+            icon: 'error',
+            title: 'Estudiante no encontrado',
+            text: `No se encontró ningún estudiante con el ID: ${id}`,
+            confirmButtonText: 'Aceptar'
+        });
+    }
 }
